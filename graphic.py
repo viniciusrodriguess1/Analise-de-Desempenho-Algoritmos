@@ -3,9 +3,9 @@ import numpy as np
 
 # Dados de tempo de execução (em segundos) para cada entrada e algoritmo
 algoritmos = ['Quick', 'Merge', 'Heap']
-entrada_1 = [0.019023, 0.025002, 0.004000]  # Tempos de execução para entrada 1
-entrada_2 = [0.102959, 0.157019, 0.028012]  # Tempos de execução para entrada 2
-entrada_3 = [0.261962, 0.335907, 0.068009]  # Tempos de execução para entrada 3
+entrada_1 = [ 0.071962, 0.168000, 0.009981]  # Tempos de execução para entrada 1
+entrada_2 = [0.313981,  1.200390, 0.059011]  # Tempos de execução para entrada 2
+entrada_3 = [0.680006, 2.370053, 0.131999]  # Tempos de execução para entrada 3
 
 # Função para criar os gráficos de barras
 def plot_execucao(ax, entrada, titulo, cor):
