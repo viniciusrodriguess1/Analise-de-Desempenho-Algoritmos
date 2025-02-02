@@ -1,12 +1,8 @@
 import time
 import random
-import psutil
-import os
+import tracemalloc
 
-def medir_memoria():
-    processo = psutil.Process(os.getpid())
-    return processo.memory_info().rss / 1024 / 1024  # em MB
-
+# Função MergeSort
 def merge_sort(array):
     if len(array) <= 1:
         return array
@@ -29,21 +25,24 @@ def merge(esquerda, direita):
     resultado.extend(direita[j:])
     return resultado
 
+# Função para medir o uso de memória durante a execução
+def medir_memoria(func, dados):
+    tracemalloc.start()  # Começa a rastrear o uso de memória
+    inicio = time.time()
+    func(dados)  # Executa o algoritmo
+    fim = time.time()
+    current, peak = tracemalloc.get_traced_memory()  # Obtém o uso de memória atual e o pico
+    tracemalloc.stop()  # Para o rastreamento de memória
+    return peak / 1024  # Retorna o pico de memória em KB
+
 # Definição da seed para garantir reprodutibilidade dos testes
 random.seed(42)
 tamanhos = [10_000, 50_000, 100_000]
 
+# Teste para MergeSort
 for tamanho in tamanhos:
-    # Dados de entrada
     dados = [random.randint(1, 1000000) for _ in range(tamanho)]
     
-    # Medindo a memória antes da execução
-    memoria_inicial = medir_memoria()
-    
-    # MergeSort
-    inicio = time.time()
-    merge_sort(dados)
-    fim = time.time()
-    memoria_final = medir_memoria()
-    
-    print(f"MergeSort ({tamanho} elementos): {fim - inicio:.6f} segundos | Memória: {memoria_final - memoria_inicial:.6f} MB")
+    # Medindo a memória e o tempo de execução para MergeSort
+    memoria_merge = medir_memoria(merge_sort, dados)
+    print(f"MergeSort ({tamanho} elementos): Memória: {memoria_merge:.6f} KB")
